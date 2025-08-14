@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Retail Review Analytics{% endblock %}
+
+{% block content %}
+  <h1 class="text-3xl font-bold mb-4">Welcome to the Retail Review Analytics Platform</h1>
+  <p class="mb-4 text-lg text-gray-700">
+    This tool helps analyze customer product reviews using AI.
+  </p>
+  <ul class="list-disc ml-6 text-gray-600">
+    <li><strong>Predict:</strong> Input a single review and get sentiment + summary</li>
+    <li><strong>Batch:</strong> Upload a CSV/JSON file and analyze multiple reviews</li>
+  </ul>
+  <div class="mt-6">
+    <a href="/predict-ui" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Try Single Prediction</a>
+    <a href="/batch-ui" class="ml-4 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Try Batch Upload</a>
+  </div>
+{% endblock %}

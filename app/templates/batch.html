@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Batch Sentiment Analysis{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-4">Batch Review Sentiment</h1>
+
+  <form id="upload-form" class="space-y-4">
+    <input type="file" name="file" id="file" accept=".csv, .json" 
+           class="border border-gray-300 rounded px-3 py-2 w-full">
+    <button type="submit" 
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+      Upload File
+    </button>
+  </form>
+
+  <div id="output" class="mt-6 text-sm space-y-4"></div>
+
+  <script>
+    document.getElementById("upload-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const fileInput = document.getElementById("file");
+      if (!fileInput.files.length) return;
+
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      const res = await fetch("/batch_predict", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+      const out = document.getElementById("output");
+      out.innerHTML = "<h2 class='text-lg font-semibold'>Predictions:</h2>";
+
+      if (data.predictions) {
+        data.predictions.forEach((item, i) => {
+          out.innerHTML += `
+            <div class='bg-white border rounded p-3 shadow'>
+              <p><strong>Review ${i + 1}:</strong> ${item.review}</p>
+              <p><strong>Sentiment:</strong> ${item.sentiment}</p>
+            </div>
+          `;
+        });
+      } else {
+        out.innerHTML = `<p class='text-red-600'>Error: ${data.error}</p>`;
+      }
+    });
+  </script>
+{% endblock %}

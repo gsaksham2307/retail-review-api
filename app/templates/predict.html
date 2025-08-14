@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Single Review Prediction{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-4">Retail Review Sentiment Analyzer</h1>
+
+  <textarea id="review" class="w-full border p-2 rounded mb-4" rows="4"
+            placeholder="Paste your review here..."></textarea>
+
+  <button onclick="submitReview()" 
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    Analyze
+  </button>
+
+  <div id="result" class="mt-4 text-lg text-gray-700"></div>
+
+  <script>
+    async function submitReview() {
+      const review = document.getElementById('review').value;
+      const response = await fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ review })
+      });
+      const data = await response.json();
+      document.getElementById("result").innerHTML =
+        `<p><strong>Sentiment:</strong> ${data.sentiment}</p>
+         <p><strong>Summary:</strong> ${data.summary}</p>`;
+    }
+  </script>
+{% endblock %}
