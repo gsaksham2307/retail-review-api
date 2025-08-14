@@ -46,7 +46,7 @@ retail_review_api/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/retail_review_api.git
+git clone [https://github.com/yourusername/retail_review_api.git](https://github.com/gsaksham2307/retail-review-api.git)
 cd retail_review_api
 ```
 
